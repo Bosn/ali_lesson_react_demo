@@ -1,4 +1,4 @@
-/* md5: ae0903941660912272d63a6ae0a46be5 */
+/* md5: 9cc6de84dab0fae6dfc46007e8ab3ef0 */
 /* Rap仓库id: 268793 */
 /* Rapper版本: 1.1.3 */
 /* eslint-disable */
@@ -22,6 +22,8 @@ export const RequestTypes = {
     'GET/example/1603262772330_SUCCESS',
     'GET/example/1603262772330_FAILURE',
   ],
+
+  'GET/todo/list': ['GET/todo/list_REQUEST', 'GET/todo/list_SUCCESS', 'GET/todo/list_FAILURE'],
 }
 
 /** store中存储的数据结构 */
@@ -30,6 +32,13 @@ interface IRapperStore {
     reduxLib.IInterfaceInfo & {
       request: IModels['GET/example/1603262772330']['Req']
       response: IResponseTypes['GET/example/1603262772330']
+    }
+  >
+
+  'GET/todo/list': Array<
+    reduxLib.IInterfaceInfo & {
+      request: IModels['GET/todo/list']['Req']
+      response: IResponseTypes['GET/todo/list']
     }
   >
 }
@@ -49,6 +58,19 @@ export const useResponse = {
     type Item = IRapperStore['GET/example/1603262772330'][0]
     type Res = IResponseTypes['GET/example/1603262772330']
     return reduxLib.useResponseData<TRapperStoreKey, Req, Res | undefined, Item>('GET/example/1603262772330', filter)
+  },
+
+  /**
+   * 接口名：获取TODO列表
+   * Rap 地址: http://rap2.taobao.org/repository/editor?id=268793&mod=418701&itf=1768718
+   */
+  'GET/todo/list': function useData(
+    filter?: {request?: IModels['GET/todo/list']['Req']} | {(storeData: IRapperStore['GET/todo/list'][0]): boolean}
+  ) {
+    type Req = IModels['GET/todo/list']['Req']
+    type Item = IRapperStore['GET/todo/list'][0]
+    type Res = IResponseTypes['GET/todo/list']
+    return reduxLib.useResponseData<TRapperStoreKey, Req, Res | undefined, Item>('GET/todo/list', filter)
   },
 }
 
@@ -71,6 +93,25 @@ export const useAPI = {
       extra,
     })
   },
+
+  /**
+   * 接口名：获取TODO列表
+   * Rap 地址: http://rap2.taobao.org/repository/editor?id=268793&mod=418701&itf=1768718
+   */
+  'GET/todo/list': function useData(
+    requestParams?: IModels['GET/todo/list']['Req'],
+    extra?: reduxLib.IUseAPIExtra<IModels['GET/todo/list']['Req']>
+  ) {
+    type Req = IModels['GET/todo/list']['Req']
+    type Res = IResponseTypes['GET/todo/list']
+    type IFetcher = typeof fetch['GET/todo/list']
+    return reduxLib.useAPICommon<TRapperStoreKey, Req, Res | undefined, IFetcher>({
+      modelName: 'GET/todo/list',
+      fetcher: fetch['GET/todo/list'],
+      requestParams,
+      extra,
+    })
+  },
 }
 
 export const useAllResponse = {
@@ -89,6 +130,21 @@ export const useAllResponse = {
       return selectedState as Array<TReturnItem>
     })
   },
+
+  /**
+   * 接口名：获取TODO列表
+   * Rap 地址: http://rap2.taobao.org/repository/editor?id=268793&mod=418701&itf=1768718
+   */
+  'GET/todo/list': function useData() {
+    return useSelector((state: reduxLib.IState) => {
+      const selectedState = (state['$$rapperResponseData'] && state['$$rapperResponseData']['GET/todo/list']) || []
+      type TReturnItem = reduxLib.IInterfaceInfo & {
+        request?: IModels['GET/todo/list']['Req']
+        response?: IResponseTypes['GET/todo/list']
+      }
+      return selectedState as Array<TReturnItem>
+    })
+  },
 }
 
 /** 重置接口数据 */
@@ -101,6 +157,17 @@ export const clearResponseCache = {
     reduxLib.dispatchAction({
       type: '$$RAPPER_CLEAR_STORE',
       payload: {'GET/example/1603262772330': undefined},
+    })
+  },
+
+  /**
+   * 接口名：获取TODO列表
+   * Rap 地址: http://rap2.taobao.org/repository/editor?id=268793&mod=418701&itf=1768718
+   */
+  'GET/todo/list': (): void => {
+    reduxLib.dispatchAction({
+      type: '$$RAPPER_CLEAR_STORE',
+      payload: {'GET/todo/list': undefined},
     })
   },
 }
@@ -121,12 +188,25 @@ export const rapperBaseSelector = {
       filter
     )
   },
+  'GET/todo/list': (
+    state: reduxLib.IState,
+    filter?: {request?: IModels['GET/todo/list']['Req']} | {(storeData: IRapperStore['GET/todo/list'][0]): boolean}
+  ) => {
+    type Req = IModels['GET/todo/list']['Req']
+    type Res = IResponseTypes['GET/todo/list']
+    type Item = IRapperStore['GET/todo/list'][0]
+    return reduxLib.getResponseData<TRapperStoreKey, Req, Res | undefined, Item>(state, 'GET/todo/list', filter)
+  },
 }
 
 export const rapperDataSelector = {
   'GET/example/1603262772330': (state: reduxLib.IState) => {
     type Res = IResponseTypes['GET/example/1603262772330']
     return reduxLib.getRapperDataSelector<TRapperStoreKey, Res>(state, 'GET/example/1603262772330')
+  },
+  'GET/todo/list': (state: reduxLib.IState) => {
+    type Res = IResponseTypes['GET/todo/list']
+    return reduxLib.getRapperDataSelector<TRapperStoreKey, Res>(state, 'GET/todo/list')
   },
 }
 

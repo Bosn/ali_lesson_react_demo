@@ -1,4 +1,4 @@
-/* md5: 77df30206ca1559d62219a57a28f5260 */
+/* md5: d066aa7be945af080063c9ee1cbfd343 */
 /* Rap仓库id: 268793 */
 /* Rapper版本: 1.1.3 */
 /* eslint-disable */
@@ -83,12 +83,35 @@ export interface IModels {
       placeholder: string
     }
   }
+
+  /**
+   * 接口名：获取TODO列表
+   * Rap 地址: http://rap2.taobao.org/repository/editor?id=268793&mod=418701&itf=1768718
+   */
+  'GET/todo/list': {
+    Req: {}
+    Res: {
+      isOk: boolean
+      errMsg: string
+      data: {
+        /**
+         * TODO名字
+         */
+        name: string
+        /**
+         * TODO ID
+         */
+        id: number
+      }[]
+    }
+  }
 }
 
 type ResSelector<T> = T
 
 export interface IResponseTypes {
   'GET/example/1603262772330': ResSelector<IModels['GET/example/1603262772330']['Res']>
+  'GET/todo/list': ResSelector<IModels['GET/todo/list']['Res']>
 }
 
 export function createFetch(fetchConfig: commonLib.RequesterOption, extraConfig?: {fetchType?: commonLib.FetchType}) {
@@ -125,6 +148,21 @@ export function createFetch(fetchConfig: commonLib.RequesterOption, extraConfig?
         params: req,
         extra,
       }) as Promise<IResponseTypes['GET/example/1603262772330']>
+    },
+
+    /**
+     * 接口名：获取TODO列表
+     * Rap 地址: http://rap2.taobao.org/repository/editor?id=268793&mod=418701&itf=1768718
+     * @param req 请求参数
+     * @param extra 请求配置项
+     */
+    'GET/todo/list': (req?: IModels['GET/todo/list']['Req'], extra?: commonLib.IExtra) => {
+      return sendRapperFetch('GET/todo/list', {
+        url: '/todo/list',
+        method: 'GET',
+        params: req,
+        extra,
+      }) as Promise<IResponseTypes['GET/todo/list']>
     },
   }
 }
