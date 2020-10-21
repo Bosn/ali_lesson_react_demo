@@ -7,8 +7,10 @@ import { createStore } from 'redux';
 import rootReducer from './reducers/rootReducer';
 import { Provider } from 'react-redux';
 import { rapperEnhancer } from './rapper'
+require('./rapper/customFetch')
 
 const store = createStore(rootReducer, rapperEnhancer())
+
 
 ReactDOM.render(
   <React.StrictMode>
