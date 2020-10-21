@@ -6,13 +6,14 @@ import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux';
 import rootReducer from './reducers/rootReducer';
 import { Provider } from 'react-redux';
+import { rapperEnhancer } from './rapper'
 
-const store = createStore(rootReducer)
+const store = createStore(rootReducer, rapperEnhancer())
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+    <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
