@@ -1,4 +1,4 @@
-/* md5: d066aa7be945af080063c9ee1cbfd343 */
+/* md5: 3b1b9118bf0c1e3b080b7e7df3e6c8b9 */
 /* Rap仓库id: 268793 */
 /* Rapper版本: 1.1.3 */
 /* eslint-disable */
@@ -15,75 +15,6 @@ import * as reduxLib from 'rap/runtime/reduxLib'
 import {RequestTypes} from './redux'
 
 export interface IModels {
-  /**
-   * 接口名：示例接口
-   * Rap 地址: http://rap2.taobao.org/repository/editor?id=268793&mod=418701&itf=1768206
-   */
-  'GET/example/1603262772330': {
-    Req: {
-      /**
-       * 请求属性示例
-       */
-      foo?: string
-    }
-    Res: {
-      /**
-       * 字符串属性示例
-       */
-      string: string
-      /**
-       * 数字属性示例
-       */
-      number: number
-      /**
-       * 布尔属性示例
-       */
-      boolean: boolean
-      /**
-       * 正则属性示例
-       */
-      regexp: string
-      /**
-       * 函数属性示例
-       */
-      function: string
-      /**
-       * 数组属性示例
-       */
-      array: {
-        /**
-         * 数组元素示例
-         */
-        foo: number
-        /**
-         * 数组元素示例
-         */
-        bar: string
-      }[]
-      /**
-       * 自定义数组元素示例
-       */
-      items: any[]
-      /**
-       * 对象属性示例
-       */
-      object: {
-        /**
-         * 对象属性示例
-         */
-        foo: number
-        /**
-         * 对象属性示例
-         */
-        bar: string
-      }
-      /**
-       * 占位符示例
-       */
-      placeholder: string
-    }
-  }
-
   /**
    * 接口名：获取TODO列表
    * Rap 地址: http://rap2.taobao.org/repository/editor?id=268793&mod=418701&itf=1768718
@@ -105,13 +36,42 @@ export interface IModels {
       }[]
     }
   }
+
+  /**
+   * 接口名：删除TODO
+   * Rap 地址: http://rap2.taobao.org/repository/editor?id=268793&mod=418701&itf=1769726
+   */
+  'DELETE/todo': {
+    Req: {
+      id?: number
+    }
+    Res: {
+      isOk: boolean
+      errMsg: string
+    }
+  }
+
+  /**
+   * 接口名：添加TODO
+   * Rap 地址: http://rap2.taobao.org/repository/editor?id=268793&mod=418701&itf=1769730
+   */
+  'PUT/todo': {
+    Req: {
+      name?: string
+    }
+    Res: {
+      isOk: boolean
+      errMsg: string
+    }
+  }
 }
 
 type ResSelector<T> = T
 
 export interface IResponseTypes {
-  'GET/example/1603262772330': ResSelector<IModels['GET/example/1603262772330']['Res']>
   'GET/todo/list': ResSelector<IModels['GET/todo/list']['Res']>
+  'DELETE/todo': ResSelector<IModels['DELETE/todo']['Res']>
+  'PUT/todo': ResSelector<IModels['PUT/todo']['Res']>
 }
 
 export function createFetch(fetchConfig: commonLib.RequesterOption, extraConfig?: {fetchType?: commonLib.FetchType}) {
@@ -136,21 +96,6 @@ export function createFetch(fetchConfig: commonLib.RequesterOption, extraConfig?
 
   return {
     /**
-     * 接口名：示例接口
-     * Rap 地址: http://rap2.taobao.org/repository/editor?id=268793&mod=418701&itf=1768206
-     * @param req 请求参数
-     * @param extra 请求配置项
-     */
-    'GET/example/1603262772330': (req?: IModels['GET/example/1603262772330']['Req'], extra?: commonLib.IExtra) => {
-      return sendRapperFetch('GET/example/1603262772330', {
-        url: '/example/1603262772330',
-        method: 'GET',
-        params: req,
-        extra,
-      }) as Promise<IResponseTypes['GET/example/1603262772330']>
-    },
-
-    /**
      * 接口名：获取TODO列表
      * Rap 地址: http://rap2.taobao.org/repository/editor?id=268793&mod=418701&itf=1768718
      * @param req 请求参数
@@ -163,6 +108,36 @@ export function createFetch(fetchConfig: commonLib.RequesterOption, extraConfig?
         params: req,
         extra,
       }) as Promise<IResponseTypes['GET/todo/list']>
+    },
+
+    /**
+     * 接口名：删除TODO
+     * Rap 地址: http://rap2.taobao.org/repository/editor?id=268793&mod=418701&itf=1769726
+     * @param req 请求参数
+     * @param extra 请求配置项
+     */
+    'DELETE/todo': (req?: IModels['DELETE/todo']['Req'], extra?: commonLib.IExtra) => {
+      return sendRapperFetch('DELETE/todo', {
+        url: '/todo',
+        method: 'DELETE',
+        params: req,
+        extra,
+      }) as Promise<IResponseTypes['DELETE/todo']>
+    },
+
+    /**
+     * 接口名：添加TODO
+     * Rap 地址: http://rap2.taobao.org/repository/editor?id=268793&mod=418701&itf=1769730
+     * @param req 请求参数
+     * @param extra 请求配置项
+     */
+    'PUT/todo': (req?: IModels['PUT/todo']['Req'], extra?: commonLib.IExtra) => {
+      return sendRapperFetch('PUT/todo', {
+        url: '/todo',
+        method: 'PUT',
+        params: req,
+        extra,
+      }) as Promise<IResponseTypes['PUT/todo']>
     },
   }
 }
